@@ -1,0 +1,24 @@
+from selenium import webdriver
+from scrapy.selector import Selector
+
+
+#添加浏览器设置（无图设置）
+chrome_opt = webdriver.ChromeOptions()
+prefs = {"profile.managed_default_content_settings.images" : 2}
+chrome_opt.add_experimental_option("prefs", prefs)
+
+#按照设置打开浏览器
+browser = webdriver.Chrome(executable_path="E:\wzh\distribute\sourse\chromedriver.exe", chrome_options=chrome_opt)
+#直接运行打开浏览器
+#browser = webdriver.Chrome(executable_path="E:\wzh\distribute\sourse\chromedriver.exe")
+
+
+
+
+
+browser.get("https://detail.tmall.hk/hk/item.htm?id=546063562812&spm=a21bo.7925826.192013.5.4535162fOzUcav&track_params={%22jpFeedId%22:%222500000200282151697%22}&scm=1007.12846.84104.999999999999999&pvid=9498527e-d066-4a3d-9d12-cd282b282d32")
+print(browser.page_source)
+
+t_selector = Selector(text=browser.page_source)
+print(t_selector.css(".tb-detail-hd h1::text").extract())
+
